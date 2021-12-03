@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Secret Santa</title>
+  <link rel="icon" href="./favicon-32x32.png">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="css/result-light.css">
+	<script type="text/javascript" src="js/cypher.js"></script>
+
+	<!-- <script type="text/javascript" src="js/PureSnow.js"></script> -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Oleo+Script+Swash+Caps&family=Pacifico&family=Permanent+Marker&display=swap" rel="stylesheet"> 
+
+</head>
+
+<body>
+	<div class="wrap">
+						<!-- <div id="snow"></div> -->
+		<div class="box" id="myBox">
+			<div class="pinBox">			
+				<section class="pinHeader">
+					<div class="bullets-color c-red"></div>
+					<div class="bullets-color c-yellow"></div>
+					<div class="bullets-color c-green"></div>
+					<p>Secret Santa Riddle</p>
+				</section>
+				
+				<section class="pinBody">
+					<div class="pinBodyContent">
+						<div id="theInput">
+							<p>Enter Solution</p>
+							<input id="pass" onkeydown="pressEnter()" oninput="reset()" type="password"  name="password">
+							<button onclick="convert()">
+								submit
+							</button>
+						</div>
+						<p id="decode" class="txt-description"></p>
+					</div>
+				</section>
+			</div>		
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
+    
+  <script type="text/javascript">
+		var dec = document.getElementById("decode"),
+				box = document.getElementById("myBox"),
+				theInput = document.getElementById("theInput"),
+		    pass = document.getElementById("pass");
+
+		var solved = false;
+
+		function pressEnter() {
+		    if (event.key === 'Enter' && !solved) {
+		        convert()
+		    }
+		}
+
+		function reset()
+		{
+			if (!solved) {
+				dec.innerText = "";
+			}
+		}
+
+		function convert()
+		{
+			const myResult = XORCipher.decode(pass.value.toLowerCase(), "Ew4CExUCBDIfDQUVGQ4eOB8UUAUZBVAIBEBQXRITTkEyABIAUAAeBVAqFQoVQRMAHkETBBwEEhMRFRVBMwkCCAMVHQADQR4OB0FKSFBdEhNOQUwDAl9MAFASBBgcBE1DFg4eFV0HEQwZDQlbUEYhFBkCGxIRDxRGXEEDAB4SXRIVExkHS0NQCQIEFlxSCQQVABJKTl8IHQYFE14CHwxfAF8vMiISVkQ0Ul8TDREIHUECBAcAAgVMThFf"); 
+			if (myResult.startsWith("correctSolution")) {
+				solved = true;
+				theInput.classList.add("toDisappear")
+				dec.innerHTML = myResult.replace("correctSolution","");
+				dec.classList.add("toAppear");
+			} else if (pass.value.toLowerCase() == "hempuli"){
+				box.classList.add("toShake");
+				dec.innerText = "Nice one; but wrong. Try something else!";
+				setTimeout(function(){box.classList.remove("toShake");},1200)
+
+			}	else {
+				box.classList.add("toShake");
+				dec.innerText = "Try something else!";
+				setTimeout(function(){box.classList.remove("toShake");},1200)
+		  }
+		}
+	</script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "jczf09ao"
+      }], "*")
+    }
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+</body></html>
